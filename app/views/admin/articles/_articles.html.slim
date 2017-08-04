@@ -1,0 +1,85 @@
+= search_form_for @search, remote: true, url: admin_articles_path, method: :get, class: 'uk-form uk-form-horizontal' do |f|
+  div.uk-form-row
+    = f.label :opend_at, '公開日', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.text_field :opend_at_gteq, include_blank: true, 'data-uk-datepicker' => "{format:'YYYY-MM-DD'}"
+      | ～ 
+      = f.text_field :opend_at_lteq, include_blank: true, 'data-uk-datepicker' => "{format:'YYYY-MM-DD'}"
+  
+  div.uk-form-row
+    = f.label :fkg, 'FKG', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.text_field :article_info_fkg_gteq, include_blank: true
+      |～ 
+      = f.text_field :article_info_fkg_lteq, include_blank: true
+  
+  div.uk-form-row
+    = f.label :cli, 'CLI', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.text_field :article_info_cli_gteq, include_blank: true
+      |～ 
+      = f.text_field :article_info_cli_lteq, include_blank: true
+  
+  div.uk-form-row
+    = f.label :category, 'Category', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.select :category_eq, Article.all_category.unshift([])
+  div.uk-form-row
+    = f.label :newspaper_id, '新聞社', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.select :newspaper_id_eq, Newspaper.all.pluck(:name, :id).unshift([])
+  div.uk-form-row
+    = f.label :id, 'id', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.text_field :id_eq, include_blank: true
+  div.uk-form-row
+    = f.label :public_scope, '公開', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.check_box :public_scope
+  div.uk-form-row
+    = f.submit 'search', class: 'uk-button'
+
+= page_entries_info @articles
+
+table.uk-table.uk-table-condensed.uk-table-hover.uk-table-striped
+  thead
+    tr
+      th= sort_link(@search, :opend_at, '公開日', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :newspaper_name, '新聞社', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :id, { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :title, 'タイトル', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :category, 'カテゴリ', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :article_info_fkg, 'FKG', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :article_info_cli, 'CLI', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :article_info_word_count, '単語数', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :article_info_svl_average, 'SVL平均', { action: :index }, { remote: true, method: :get })
+      th= sort_link(@search, :article_info_toeic_average, 'TOEIC平均', { action: :index }, { remote: true, method: :get })
+      th URL
+      th 公開情報
+  tbody
+    - @articles.each do |article|
+      tr id=article.id
+        td= article.opend_at
+        td= article.newspaper.name
+        td= article.id
+        td= link_to article.title, admin_article_path(article.id), target: "_blank"
+        td= article.category
+        - if article.article_info.present?
+          td= article.article_info.fkg.round(2)
+          td= article.article_info.cli.round(2)
+          td= article.article_info.word_count
+          td= article.article_info.svl_average.round(2)
+          td= article.article_info.toeic_average.round(2)
+        - else
+          td
+          td
+          td
+          td
+          td
+        td= link_to '公式', article.url, target: "_blank"
+        td
+          - public_status = article.is_public ? '公開' : '非公開'
+          - public_class = article.is_public ? 'uk-button-success' : ''
+          input type="button" value="#{public_status}" onclick="togglePublic(#{article.id});" class="uk-button #{public_class} public_status"
+
+= paginate @articles, remote: true

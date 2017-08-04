@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: contents
+#
+#  id         :integer          not null, primary key
+#  sentence   :text
+#  article_id :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sentence: MyText
+  article_id: 1
+
+two:
+  sentence: MyText
+  article_id: 1

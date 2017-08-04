@@ -1,0 +1,18 @@
+h2 利用者情報
+
+= form_for :user, url: { action: :update_score }, html: { class: 'uk-form' } do |f|
+  div.uk-grid
+    div.uk-width-1-6
+      = f.label :toeic_score, 'TOEICスコア', class: 'uk-form-label uk-width-1-1'
+    div.uk-width-1-6
+      = f.text_field :toeic_score, class: 'uk-width-1-1'
+    div.uk-width-1-6
+      = f.submit '登録', class: 'uk-button uk-width-1-2'
+hr
+h2 記事一覧
+br
+= link_to '既知単語再計算', calc_known_rate_users_path, class: 'uk-button'
+br
+br
+div#articles= render 'articles'
+

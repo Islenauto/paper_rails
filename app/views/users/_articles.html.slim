@@ -1,0 +1,38 @@
+= search_form_for @search, remote: true, url: root_path, method: :get, class: 'uk-form uk-form-horizontal' do |f|
+  div.uk-form-row
+    = f.label :category, 'カテゴリ', class: 'uk-form-label uk-form-horizontal'
+    div.uk-form-controls
+      = f.select :category_eq, Article.all_category.unshift([])
+  div.uk-form-row
+    = f.submit '検索', class: 'uk-button'
+
+= page_entries_info @articles
+
+table.uk-table.uk-table-condensed.uk-table-hover.uk-table-striped
+  thead
+    tr
+      th= sort_link(@search, :opend_at, '公開日')
+      th= sort_link(@search, :user_articles_recommend_point, 'おすすめ度')
+      th= sort_link(@search, :user_articles_known_rate, '既知単語割合')
+      th= sort_link(@search, :category, 'カテゴリ')
+      th= sort_link(@search, :title, 'タイトル')
+      th= sort_link(@search, :article_info_word_count, '単語数')
+      th= sort_link(@search, :newspaper_name, '新聞社')
+  tbody
+    - @articles.each do |article|
+      tr id=article.id
+        td= article.opend_at
+        td= article.user_articles.first.recommend_point
+        td
+          - known_rate_text = "#{(article.user_articles.first.known_rate * 100).round(1)} %"
+          - class_name = "suitable" if article.user_articles.first.known_rate >= 0.90
+          - class_name = "unsuitable" if article.user_articles.first.known_rate < 0.90
+          div class="#{class_name}" #{known_rate_text}
+        td.uk-text-center
+          div class="label-#{article.category} uk-badge"
+            = article.category
+        td
+          = link_to article.title, article_path(article.id), target: "_blank"
+        td= article.article_info.word_count
+        td= article.newspaper.name
+= paginate @articles, remote: true

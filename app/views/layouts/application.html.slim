@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    title
+      | PaperRails
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    nav.uk-navbar
+      = link_to 'PaperRails', '#', class: 'uk-navbar-brand'
+      - if user_signed_in?
+        ul.uk-navbar-nav
+          - if current_user.is_admin
+            li.uk-parent data-uk-dropdown=""
+              a 管理          
+              div.uk-dropdown.uk-dropdown-navbar
+                ul.uk-nav.uk-nav-navbar
+                  li= link_to '記事', admin_articles_path
+          li= link_to '記事', root_path
+      div.uk-navbar-flip
+        ul.uk-navbar-nav
+          - if user_signed_in?
+            li.uk-parent data-uk-dropdown=""
+              a= current_user.email
+              div.uk-dropdown.uk-dropdown-navbar
+                ul.uk-nav.uk-nav-navbar
+                  li= link_to 'アカウント編集', edit_user_registration_path
+                  li= link_to 'ログアウト', destroy_user_session_path, method: :delete
+          - else
+            li= link_to 'ログイン', new_user_session_path
+    div.uk-container.uk-container-center.uk-margin-top
+      div.contents
+        = yield
+
+- if notice
+  javascript:
+    UIkit.notify({ message: '#{notice}', timeout: 2000 });
+
+- if alert
+  javascript:
+    UIkit.notify({ message: '#{alert}', timeout: 2000, status: 'danger' });

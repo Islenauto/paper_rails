@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: user_articles
+#
+#  id              :integer          not null, primary key
+#  user_id         :integer          not null
+#  article_id      :integer          not null
+#  read_status     :integer          default(0), not null
+#  known_rate      :float            default(0.0), not null
+#  recommend_point :integer          default(0), not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  article_id: 
+  read_status: 1
+  known_rate: 
+  recommend_point: 1
+
+two:
+  user_id: 
+  article_id: 
+  read_status: 1
+  known_rate: 
+  recommend_point: 1

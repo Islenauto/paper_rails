@@ -1,0 +1,10 @@
+
+article.uk-article
+  h2.uk-article-title= @article.title
+  p.uk-article-meta= "#{@article.category} #{@article.opend_at}"
+  p= link_to '公式', @article.url, target: "_blank"
+  hr.uk-article-divider
+
+  - @article.content.sentence.split(/<br>/).each do |sentence|
+    p.uk-article-lead= sentence
+  hr.uk-article-divider

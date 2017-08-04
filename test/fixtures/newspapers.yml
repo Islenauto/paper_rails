@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: newspapers
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  url        :string(255)
+#  type       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  url: MyString
+  type: 
+
+two:
+  name: MyString
+  url: MyString
+  type: 

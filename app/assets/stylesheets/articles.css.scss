@@ -1,0 +1,72 @@
+// Place all the styles related to the articles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.unknown {
+    font-weight: 800;
+}
+
+.slash-inactive {
+    display: none;
+}
+
+.slash-active {
+    font-weight: 500;
+    color: #AFAFAF;
+}
+
+.noun-pos-active {
+    color: #00a381;
+}
+
+.pre-pos-active {
+    color: #000000;
+}
+
+.verb-pos-active {
+    color: #5383C3;
+}
+
+.adj-pos-active {
+    color: #ee7800;
+}
+
+.label-technology {
+    background-color: #5654A2;
+}
+
+.label-sports {
+    background-color: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    color: #000000;
+}
+
+.label-world {
+    background-color: #5383C3;
+}
+
+.label-business {
+    background-color: #E6B422;
+}
+
+.label-entertainment {
+    background-color: #95949A;
+}
+
+.label-science {
+    background-color: #5cb85c;
+}
+
+.suitable {
+    font-size: 120%;
+    font-weight: bold;
+    color: #38b48b;
+}
+
+.unsuitable {
+    font-size: 90%;
+    font-weight: bold;
+    color: #ee827c;
+}
